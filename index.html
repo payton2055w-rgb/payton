@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Payton | Programação para pequenos problemas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&family=Figtree:wght@400;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("js")</script>
+<style>
+:root{
+  --bg:#F3F5FA; --surface:#FFFFFF; --ink:#12172B; --muted:#4A5170;
+  --brand:#5338F0; --on-brand:#FFFFFF; --mint:#38D69A; --on-mint:#0B2A1F; --line:#D8DCEB;
+  --tint:#E9E6FF; --glow1:rgba(83,56,240,.16); --glow2:rgba(56,214,154,.2);
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Courier Prime","Courier New",monospace;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1226; --surface:#1A1E3D; --ink:#F1F3FF; --muted:#AAB0D6;
+    --brand:#8C7BFF; --on-brand:#0F1226; --line:#2C3263; --tint:#2A2B63;
+    --glow1:rgba(140,123,255,.22); --glow2:rgba(56,214,154,.14); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1226; --surface:#1A1E3D; --ink:#F1F3FF; --muted:#AAB0D6;
+  --brand:#8C7BFF; --on-brand:#0F1226; --line:#2C3263; --tint:#2A2B63;
+  --glow1:rgba(140,123,255,.22); --glow2:rgba(56,214,154,.14); color-scheme:dark;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 4.5rem);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 var(--body);overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--brand);outline-offset:3px}
+.wrap{max-width:64rem;margin:0 auto;padding:0 1.25rem}
+h1,h2,h3{font-family:var(--display);line-height:1.05;margin:0}
+h2{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;margin-bottom:.75rem;letter-spacing:-.01em}
+p{margin:0 0 1rem;max-width:62ch}
+.lead{color:var(--muted);font-size:1.15rem;margin-bottom:2rem}
+.eyebrow{font:600 .85rem var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--brand);margin-bottom:.6rem}
+
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:1rem;height:4rem}
+.logo{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--display);font-weight:800;font-size:1.5rem;letter-spacing:-.01em;text-decoration:none;margin-right:auto}
+.logo svg{width:2.3rem;height:2.3rem;flex:none}
+nav{display:none;gap:1.5rem;font-weight:600}
+nav a{text-decoration:none;color:var(--muted)}
+nav a:hover{color:var(--ink)}
+.icon-btn{width:2.6rem;height:2.6rem;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:grid;place-items:center}
+.btn{display:inline-block;background:var(--brand);color:var(--on-brand);font:600 1rem var(--body);text-decoration:none;padding:.85rem 1.4rem;border-radius:999px;border:2px solid var(--brand);cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn.sm{padding:.55rem 1rem;font-size:.95rem}
+.btn:hover{filter:brightness(1.1)}
+.cta{display:flex;gap:.75rem;flex-wrap:wrap}
+
+.hero{position:relative;display:grid;gap:3rem;padding:3.5rem 0 4.5rem;align-items:center}
+.hero::before{content:"";position:absolute;inset:-4rem -50vw 0;z-index:-1;
+  background:radial-gradient(34rem 20rem at 85% 10%,var(--glow1),transparent 70%),radial-gradient(28rem 18rem at 10% 90%,var(--glow2),transparent 70%),
+  linear-gradient(var(--line) 1px,transparent 1px) 0 0/3rem 3rem;
+  -webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
+.hero h1{font-size:clamp(2.7rem,10vw,5.4rem);font-weight:800;letter-spacing:-.025em}
+.hero h1 em{font-style:normal;color:var(--brand)}
+.hero p{font-size:1.2rem;color:var(--muted);margin:1.25rem 0 1.75rem}
+.stage{position:relative;min-height:19rem;display:grid;place-items:center}
+.code{position:absolute;left:0;top:0;width:min(100%,19rem);background:#141833;color:#E6E9FF;border-radius:1rem;padding:2.2rem 1rem 1rem;
+  font:400 .85rem/1.65 var(--mono);box-shadow:0 1.2rem 2.5rem -1rem rgba(20,24,51,.5)}
+.code::before{content:"";position:absolute;left:1rem;top:.9rem;width:.6rem;height:.6rem;border-radius:50%;background:#FF6B6B;box-shadow:1rem 0 #FFC62E,2rem 0 var(--mint)}
+.code .k{color:#A99BFF}.code .s{color:var(--mint)}.code .c{color:#8A90B8}
+.receipt{background:var(--surface);color:var(--ink);font:400 .92rem/1.7 var(--mono);padding:1.3rem 1.2rem;position:relative;border:1px solid var(--line);box-shadow:0 .6rem 0 -.2rem var(--mint)}
+.receipt::after{content:"";position:absolute;left:-1px;right:-1px;top:100%;height:.5rem;
+  background:linear-gradient(135deg,var(--surface) 25%,transparent 25%) -.4rem 0,linear-gradient(225deg,var(--surface) 25%,transparent 25%) -.4rem 0;background-size:.8rem .8rem}
+.receipt b{display:block;font-size:1rem;text-align:center;margin-bottom:.6rem}
+.receipt .row{display:flex;justify-content:space-between;gap:1rem;border-bottom:1px dashed var(--line);word-break:break-word}
+.receipt .tot{display:flex;justify-content:space-between;margin-top:.6rem;font-weight:700}
+.stage .receipt{position:relative;width:min(88%,16rem);margin:7.5rem 0 0 auto;transform:rotate(3deg)}
+.ok{color:var(--brand);font-weight:700}
+
+.strip{overflow:hidden;background:var(--brand);color:var(--on-brand);transform:rotate(-1deg);margin:0 -1rem;padding:.8rem 0}
+.strip div{display:flex;gap:2.5rem;width:max-content;font:800 1.2rem var(--display);white-space:nowrap;animation:slide 24s linear infinite}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+section{padding:4.5rem 0}
+.grid{display:grid;gap:1.25rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:1.25rem;padding:1.5rem;transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-4px);border-color:var(--brand)}
+.ic{width:3rem;height:3rem;border-radius:.9rem;background:var(--tint);color:var(--brand);display:grid;place-items:center;margin-bottom:1rem}
+.ic svg{width:1.6rem;height:1.6rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-size:1.35rem;font-weight:800;margin-bottom:.4rem}
+.card p{color:var(--muted);margin:0}
+
+.demo{background:var(--surface);border-block:1px solid var(--line)}
+.demo .grid{align-items:start}
+label{display:block;font-weight:600;margin:0 0 .35rem}
+input{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:.8rem;padding:.75rem .9rem;margin-bottom:1rem}
+input:focus{border-color:var(--brand);outline:none}
+.note{font-size:.9rem;color:var(--muted)}
+
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:1.25rem;padding:1.4rem 1.4rem 1.4rem 4.4rem;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:1.2rem;top:1.2rem;width:2.3rem;height:2.3rem;border-radius:50%;background:var(--mint);color:var(--on-mint);font:800 1.1rem/2.3rem var(--display);text-align:center}
+.steps strong{display:block;font:800 1.2rem var(--display);margin-bottom:.2rem}
+.steps span{color:var(--muted)}
+
+details{background:var(--surface);border:1px solid var(--line);border-radius:1rem;padding:1rem 1.25rem;margin-bottom:.75rem}
+summary{cursor:pointer;font:800 1.1rem var(--display);list-style:none;display:flex;justify-content:space-between;gap:1rem}
+summary::after{content:"+";color:var(--brand);font-size:1.4rem;line-height:1}
+details[open] summary::after{content:"–"}
+details p{margin:.75rem 0 0;color:var(--muted)}
+
+.contact{background:var(--brand);color:var(--on-brand);border-radius:1.75rem;padding:2.5rem 1.5rem;position:relative;overflow:hidden}
+.contact::after{content:"";position:absolute;right:-3rem;bottom:-3rem;width:12rem;height:12rem;border-radius:50%;background:var(--mint);opacity:.25}
+.contact h2{margin-bottom:.75rem}.contact p{margin-bottom:1.5rem}
+.contact .btn{background:var(--mint);color:var(--on-mint);border-color:var(--mint)}
+.contact .btn.alt{background:transparent;color:var(--on-brand);border-color:var(--on-brand)}
+footer{padding:2.5rem 0;color:var(--muted);font-size:.95rem}
+
+.js .rv{opacity:0;transform:translateY(1.5rem);transition:opacity .6s,transform .6s}
+.js .rv.in{opacity:1;transform:none}
+
+@media (min-width:760px){
+  nav{display:flex}
+  .hero{grid-template-columns:1.25fr 1fr}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .demo .grid{grid-template-columns:1fr 1fr;gap:3rem}
+  .contact{padding:3.5rem}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .strip div{animation:none}
+  .js .rv{opacity:1;transform:none;transition:none}
+  .card{transition:none}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="logo" href="#" aria-label="Payton"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="11" fill="var(--brand)"/><path d="M13 31V10h9.5a6.5 6.5 0 0 1 0 13H13" fill="none" stroke="var(--on-brand)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="29" cy="30" r="3.2" fill="var(--mint)"/></svg>Payton</a>
+  <nav aria-label="Principal"><a href="#servicos">Serviços</a><a href="#demo">Demo</a><a href="#como">Como funciona</a><a href="#faq">Perguntas</a></nav>
+  <button class="icon-btn" id="tema" type="button" aria-label="Mudar entre tema claro e escuro"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+  <a class="btn sm" href="#contato">Pedir ajuda</a>
+</div></header>
+
+<main>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Programação sob medida</div>
+      <h1>Um problema pequeno? A gente resolve com <em>código</em>.</h1>
+      <p>Criamos programas simples, ferramentas com IA e jogos. Do gerador de recibos ao bot que responde aos seus clientes.</p>
+      <div class="cta"><a class="btn" href="#contato">Contar meu problema</a><a class="btn alt" href="#demo">Testar uma demo</a></div>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="code"><span class="c"># o problema</span><br>recibo = <span class="s">“feito à mão”</span><br><br><span class="k">def</span> payton(problema):<br>&nbsp;&nbsp;ideia = pensar(problema)<br>&nbsp;&nbsp;<span class="k">return</span> codigo(ideia)<br><br><span class="ok">&gt;&gt;&gt; resolvido ✓</span></div>
+      <div class="receipt"><b>RECIBO Nº 001</b><div class="row"><span>Recibo automático</span><span class="ok">pronto</span></div><div class="row"><span>Bot com IA</span><span class="ok">pronto</span></div><div class="row"><span>Jogo</span><span class="ok">pronto</span></div><div class="tot"><span>Problemas</span><span>resolvidos</span></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="strip" aria-hidden="true"><div><span>Recibos</span><span>✦</span><span>Bots com IA</span><span>✦</span><span>Jogos</span><span>✦</span><span>Sites</span><span>✦</span><span>Automações</span><span>✦</span><span>Recibos</span><span>✦</span><span>Bots com IA</span><span>✦</span><span>Jogos</span><span>✦</span><span>Sites</span><span>✦</span><span>Automações</span><span>✦</span></div></div>
+
+<section id="servicos"><div class="wrap">
+  <div class="eyebrow">Serviços</div><h2>O que a Payton faz</h2>
+  <p class="lead">Soluções pequenas, claras e feitas para o seu dia a dia.</p>
+  <div class="grid g2">
+    <div class="card rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></div><h3>Recibos e pequenos sistemas</h3><p>Programas que geram recibos, organizam pedidos e fazem as contas por si.</p></div>
+    <div class="card rv"><div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="11" rx="3"/><circle cx="9" cy="13.5" r="1"/><circle cx="15" cy="13.5" r="1"/><path d="M12 8V5"/><circle cx="12" cy="3.8" r="1"/></svg></div><h3>Ferramentas com IA</h3><p>Assistentes e bots que respondem perguntas, resumem textos e ajudam no atendimento.</p></div>
+    <div class="card rv"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="10" rx="5"/><path d="M8 11v4M6 13h4"/><circle cx="15.5" cy="12" r=".8"/><circle cx="17.5" cy="14" r=".8"/></svg></div><h3>Jogos</h3><p>Jogos simples para o navegador, para divertir, ensinar ou divulgar a sua marca.</p></div>
+    <div class="card rv"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg></div><h3>Sites simples</h3><p>Uma página clara para o seu negócio, projeto ou ideia aparecer na internet.</p></div>
+  </div>
+</div></section>
+
+<section id="demo" class="demo"><div class="wrap">
+  <div class="eyebrow">Demo interativa</div><h2>Veja um recibo nascer</h2>
+  <p class="lead">Escreva os dados à esquerda e o recibo muda na hora. É isto que a Payton pode fazer para o seu negócio.</p>
+  <div class="grid">
+    <div>
+      <label for="cli">Nome do cliente</label><input id="cli" value="Maria Silva" maxlength="40">
+      <label for="srv">Serviço</label><input id="srv" value="Bolo de aniversário" maxlength="40">
+      <label for="val">Valor (Kz)</label><input id="val" type="number" min="0" inputmode="numeric" value="15000">
+      <div class="cta"><button class="btn" id="novo" type="button">Novo recibo</button><button class="btn alt" id="copiar" type="button">Copiar texto</button></div>
+      <p class="note" id="msg" role="status" style="margin-top:1rem">Demonstração: nada é guardado.</p>
+    </div>
+    <div class="receipt" aria-live="polite"><b>RECIBO Nº <span id="rn">001</span></b>
+      <div class="row"><span>Data</span><span id="rd"></span></div>
+      <div class="row"><span>Cliente</span><span id="rc"></span></div>
+      <div class="row"><span>Serviço</span><span id="rs"></span></div>
+      <div class="tot"><span>TOTAL</span><span id="rv"></span></div>
+      <p class="note" style="margin:.8rem 0 0;text-align:center">Obrigado pela preferência!</p></div>
+  </div>
+</div></section>
+
+<section id="como"><div class="wrap">
+  <div class="eyebrow">Processo</div><h2>Como funciona</h2>
+  <p class="lead">Três passos, sem complicação.</p>
+  <ol class="steps grid g3" style="gap:1rem">
+    <li class="rv"><strong>Conta o problema</strong><span>Explique o que está difícil ou demorado.</span></li>
+    <li class="rv"><strong>Fazemos um teste</strong><span>Vê uma versão inicial e diz o que mudar.</span></li>
+    <li class="rv"><strong>Entregamos pronto</strong><span>Ajustamos até funcionar como precisa.</span></li>
+  </ol>
+</div></section>
+
+<section id="faq" style="padding-top:0"><div class="wrap" style="max-width:46rem">
+  <div class="eyebrow">Perguntas</div><h2>Dúvidas comuns</h2>
+  <details><summary>Quanto custa?</summary><p>Depende do projeto. Dizemos o valor antes de começar, sem surpresas.</p></details>
+  <details><summary>Quanto tempo demora?</summary><p>Coisas pequenas, como um recibo automático, ficam prontas em poucos dias.</p></details>
+  <details><summary>Preciso saber programar?</summary><p>Não. Você explica a ideia e nós tratamos do resto.</p></details>
+  <details><summary>Quem faz os projetos?</summary><p>Um jovem programador que adora resolver problemas e está sempre a aprender.</p></details>
+</div></section>
+
+<section id="contato" style="padding-top:0"><div class="wrap">
+  <div class="contact">
+    <h2>Qual problema quer resolver?</h2>
+    <p>Mande uma mensagem e respondemos com uma ideia de como ajudar.</p>
+    <div class="cta"><a class="btn" href="https://wa.me/244000000000">Chamar no WhatsApp</a><a class="btn alt" href="mailto:contato@payton.com">Enviar e-mail</a></div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">© 2026 Payton. Feito por um jovem programador.</div></footer>
+
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)},n=1;
+  function kz(v){try{return new Intl.NumberFormat("pt-PT",{maximumFractionDigits:0}).format(v)+" Kz"}catch(e){return v+" Kz"}}
+  function draw(){
+    $("rn").textContent=String(n).padStart(3,"0");
+    $("rd").textContent=new Date().toLocaleDateString("pt-PT");
+    $("rc").textContent=$("cli").value||"—";
+    $("rs").textContent=$("srv").value||"—";
+    $("rv").textContent=kz(Number($("val").value)||0);
+  }
+  ["cli","srv","val"].forEach(function(i){$(i).addEventListener("input",draw)});
+  $("novo").addEventListener("click",function(){n++;draw()});
+  $("copiar").addEventListener("click",function(){
+    var t="RECIBO Nº "+$("rn").textContent+"\nData: "+$("rd").textContent+"\nCliente: "+$("rc").textContent+"\nServiço: "+$("rs").textContent+"\nTOTAL: "+$("rv").textContent;
+    try{navigator.clipboard.writeText(t).then(function(){$("msg").textContent="Recibo copiado!"},function(){$("msg").textContent="Não foi possível copiar."})}
+    catch(e){$("msg").textContent="Não foi possível copiar."}
+  });
+  draw();
+  $("tema").addEventListener("click",function(){
+    var r=document.documentElement,cur=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+    r.setAttribute("data-theme",cur==="dark"?"light":"dark");
+  });
+  var els=document.querySelectorAll(".rv");
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.15});
+    els.forEach(function(e){io.observe(e)});
+  }else{els.forEach(function(e){e.classList.add("in")})}
+})();
+</script>
+</body>
+</html>
